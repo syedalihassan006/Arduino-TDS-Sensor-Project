@@ -92,13 +92,18 @@ Temperature compensation is applied at a fixed reference of **25°C**.
 
 ## 💻 Code
 
-The full Arduino sketch is in [`tds_sensor.ino`](./tds_sensor.ino).
+Two versions of the Arduino sketch are available:
+
+| Version | File | Description |
+|---|---|---|
+| Without Temperature | [`without_temperature/TDS_Meter_No_TempSensor.ino`](./without_temperature/TDS_Meter_No_TempSensor.ino) | Uses fixed 25°C for temperature compensation |
+| With Temperature ✅ | [`with_temperature/TDS_Meter_with_Temperature_TDS_Sensor.ino`](./with_temperature/TDS_Meter_with_Temperature_TDS_Sensor.ino) | Uses DS18B20 sensor for real-time temperature compensation |
 
 **Key logic summary:**
 - Reads analog voltage from the TDS probe via pin A0
-- Applies temperature compensation (fixed at 25°C)
+- Applies real-time temperature compensation via DS18B20 (with temp version)
 - Converts EC to TDS using the manufacturer formula
-- Displays TDS, EC, and temperature on the LCD
+- Displays TDS, EC, and live temperature on the LCD
 - Triggers red LED + buzzer if TDS < 50 ppm or > 700 ppm
 
 ---
@@ -163,9 +168,45 @@ Additional tests confirmed:
 
 ---
 
+## 📂 Data Files
+
+All raw and processed data files are available in the [`data/`](./data/) folder:
+
+| File | Description |
+|---|---|
+| `TDSraw.xlsx` | Raw sensor readings from both Arduino and commercial sensor across all NaCl concentrations |
+| `PairedtTest.xlsx` | Paired t-test results comparing Arduino vs commercial sensor |
+| `TDShysterisis.xlsx` | Hysteresis data — increasing vs decreasing concentration readings |
+| `TDSconfidance.xlsx` | 95% Confidence interval calculations for both sensors |
+| `TDSQQ.xlsx` | QQ plot data for normality analysis of Arduino sensor readings |
+| `TDS_Sensor_Results.xlsx` | Full compiled trial data including theoretical, Arduino, and commercial readings |
+
+> 💡 All data files are in `.xlsx` format and can be opened in Microsoft Excel or Google Sheets.
+
+---
+
+## 🖥️ Simulation
+
+Proteus simulation files are included for both versions so you can test the circuit without physical hardware:
+
+| Version | File |
+|---|---|
+| Without Temperature | [`without_temperature/Proteus_Simulation_No_TempSensor.pdsprj`](./without_temperature/Proteus_Simulation_No_TempSensor.pdsprj) |
+| With Temperature ✅ | [`with_temperature/Proteus_Simulation.pdsprj`](./with_temperature/Proteus_Simulation.pdsprj) |
+
+**To run a simulation:**
+1. Open [Proteus Design Suite](https://www.labcenter.com/)
+2. Open the `.pdsprj` file
+3. Click the **Play** button to simulate
+4. The LCD, LEDs, and buzzer will behave exactly as on the real hardware
+
+> 💡 This is a great way to understand the circuit before building it.
+
+---
+
 ## 🔮 Future Work
 
-- **Temperature Compensation:** Integrate a **DS18B20** temperature sensor for real-time compensation instead of assuming a fixed 25°C
+- **Temperature Compensation:** ✅ Already implemented! See the `with_temperature/` version using the DS18B20 sensor
 - **Extended Range:** Expand calibration beyond 1000 ppm
 - **Wireless Monitoring:** Add an ESP8266/ESP32 for IoT-based remote water quality tracking
 - **Enclosure:** Design a waterproof housing for field deployment
