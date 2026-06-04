@@ -35,6 +35,8 @@ Salinity and dissolved solids measurement is critical in environmental monitorin
 - Alerts the user via **LED and buzzer** when readings fall outside safe limits
 - Was statistically proven to perform on par with a **commercial Vivosun TDS meter**
 
+![Full Experimental Setup](images/setup.jpg)
+
 ---
 
 ## 🔧 Hardware Components
@@ -61,6 +63,8 @@ The sensor measures **electrical conductivity** between two metal probes submerg
 Conductivity (µS) → Analog Voltage (0–2.3V) → Arduino ADC → EC Value → TDS (ppm)
 ```
 
+![LCD Display](images/lcd.jpg)
+
 The TDS is calculated using this formula:
 ```
 TDS = (133.42 × EC³ - 255.86 × EC² + 857.39 × EC) × 0.5
@@ -70,6 +74,8 @@ Temperature compensation is applied at a fixed reference of **25°C**.
 ---
 
 ## 🔌 Wiring & Setup
+
+![Arduino Board](images/arduino.jpg)
 
 | Arduino Pin | Connected To |
 |---|---|
@@ -98,6 +104,8 @@ The full Arduino sketch is in [`tds_sensor.ino`](./tds_sensor.ino).
 ---
 
 ## 🧪 Calibration
+
+![Sensor in Water](images/sensor.jpg)
 
 **Single-Point Calibration:**
 1. Prepare a 500 ppm reference solution (0.5g NaCl per 1L distilled water)
